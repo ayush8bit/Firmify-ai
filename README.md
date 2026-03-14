@@ -1,34 +1,88 @@
 # Firmify.ai
 
-Firmify.ai is an open-source web application that turns natural language hardware requests into downloadable microcontroller firmware projects. It combines a React + TypeScript frontend, a FastAPI backend, an OpenAI-powered reasoning layer, and a template-based C code generator that targets common embedded boards.
+Firmify.ai is a web app that helps people turn plain-English hardware ideas into starter firmware projects.
 
-## Website
+Instead of opening vendor tools, digging through datasheets, remembering pin mappings, and writing boilerplate from scratch, you can describe what you want in one sentence and get back structured embedded C firmware you can inspect, download, and build on.
 
-Suggested production URL:
-
-```text
-https://firmify-ai.vercel.app
-```
-
-Suggested backend API URL:
-
-```text
-https://firmify-ai-api.onrender.com
-```
-
-These URLs are the intended live targets for the project. They become real once you push the repo to GitHub and deploy the frontend to Vercel and the backend to Render.
-
-## Overview
-
-Example prompt:
+Example:
 
 ```text
 Create firmware for STM32 that reads ADC from PA1 and sends value over UART every 500ms.
 ```
 
-The system interprets the request, extracts the hardware intent, selects the matching board support package, generates source files such as `main.c`, `adc.c`, `uart.c`, `gpio.c`, `interrupts.c`, and bundles the result into a ZIP artifact.
+Firmify.ai reads that prompt, understands the board and peripherals involved, and generates a ready-to-edit firmware project with files like `main.c`, `adc.c`, `uart.c`, `gpio.c`, `interrupts.c`, and a build skeleton.
 
-## Architecture
+## Why I Built This
+
+Embedded development is powerful, but it is also slow to get started.
+
+A lot of people hit the same wall:
+- They know what they want the hardware to do
+- They do not know the exact driver setup yet
+- They get stuck in board setup, initialization, clock config, and peripheral boilerplate
+- They lose time jumping between documentation, examples, forums, and IDEs
+
+Firmify.ai is meant to reduce that friction.
+
+It does not try to replace embedded engineers.
+It helps them start faster.
+
+It is especially useful for:
+- students learning microcontrollers
+- makers and hobbyists building prototypes
+- embedded engineers who want a faster starting point
+- hackathon teams building hardware demos
+- software developers entering embedded systems for the first time
+
+## The Problem Firmify.ai Solves
+
+Firmware work often starts with repetitive setup:
+- choosing the right board and peripherals
+- figuring out which pins make sense
+- wiring up ADC, UART, GPIO, timing loops, and interrupts
+- creating the same project structure again and again
+- translating a functional idea into low-level code
+
+That setup work is necessary, but it is rarely the interesting part.
+
+Firmify.ai helps by converting a human description into a board-aware firmware starter project. That means less time spent on boilerplate, and more time spent testing the actual idea.
+
+## How It Helps People
+
+Firmify.ai helps people move from "idea" to "starting code" quickly.
+
+Instead of this:
+- search examples
+- read docs
+- guess peripheral setup
+- hand-write project files
+- debug missing pieces
+
+You get this:
+- type your hardware intention
+- choose a board
+- inspect generated firmware
+- download the project
+- customize and continue
+
+It gives people a practical bridge between high-level thinking and low-level embedded implementation.
+
+## Inspiration
+
+Firmify.ai is inspired by products and workflows that make technical work feel more conversational and less intimidating.
+
+The project draws inspiration from:
+- **ChatGPT / AI coding copilots** for natural-language interaction
+- **Vercel-style product UX** for clean, minimal, modern presentation
+- **Replit / CodeSandbox-style fast iteration** where you can quickly move from idea to output
+- **PlatformIO / STM32CubeMX workflows** in the sense that they help scaffold embedded projects
+- **Developer tools with preview-first design** where people can inspect results before committing to them
+
+Firmify.ai takes inspiration from those experiences, but focuses specifically on firmware generation for embedded systems.
+
+## How It Works
+
+The system follows a simple pipeline:
 
 ```text
 Natural Language Input
@@ -46,77 +100,106 @@ Firmware Code Generator
 Downloadable Firmware Project
 ```
 
-Additional detail lives in [docs/architecture.md](/c:/Users/ayush/OneDrive/Desktop/scrapper/ai-firmware-studio/docs/architecture.md).
+In practice, that means:
+1. You describe the behavior you want
+2. Firmify.ai extracts the MCU, peripherals, pins, and timing
+3. It maps that request to a supported board
+4. It generates firmware source files from templates
+5. You preview the code in the browser
+6. You download the project as a ZIP
 
-## Features
+## Current Board Support
 
-- Natural language prompt editor for embedded firmware requests
-- MCU / board selection for STM32F103, ESP32 DevKit, and Arduino Uno
-- OpenAI-backed interpreter with a deterministic rule-based fallback
-- Template-based C firmware generation
-- Syntax-highlighted firmware preview
-- ZIP download endpoint for generated projects
-- Optional voice command input in supported browsers
-- Lightweight UART simulator panel
-- Embedded debugging suggestions in the UI
+Firmify.ai currently includes starter support for:
+- STM32F103 Blue Pill
+- ESP32 DevKit
+- Arduino Uno
 
-## Repository Structure
+Each board support package includes:
+- clock config
+- GPIO mapping
+- UART driver
+- ADC driver
+- interrupt handlers
+
+## How To Use
+
+### 1. Open the website
+
+Visit:
+
+```text
+https://firmify-ai.vercel.app
+```
+
+### 2. Describe your firmware
+
+Type a prompt such as:
+
+```text
+Create firmware for STM32 that reads ADC from PA1 and sends value over UART every 500ms.
+```
+
+### 3. Choose your board
+
+Pick the target board from the dropdown.
+
+### 4. Generate firmware
+
+Click **Generate with Firmify.ai**.
+
+### 5. Review the result
+
+You will see:
+- the parsed hardware intent
+- generated source files
+- a firmware preview window
+- downloadable project output
+
+### 6. Download and continue
+
+Download the ZIP and use it as a starting point for your real embedded project.
+
+## Example Prompts
+
+- `Create firmware for STM32 that reads ADC from PA1 and sends value over UART every 500ms.`
+- `Build Arduino Uno firmware that samples A0 and prints readings every 1s.`
+- `Generate ESP32 firmware that toggles GPIO2 and streams status over UART.`
+- `Create STM32 firmware that blinks PC13 every 200ms and logs heartbeat text over UART.`
+
+## Tech Stack
+
+### Frontend
+- React
+- TypeScript
+- Tailwind CSS
+- Vite
+
+### Backend
+- FastAPI
+- Pydantic
+
+### AI Layer
+- OpenAI API integration
+- rule-based fallback parser
+
+### Firmware Generation
+- template-based C code generator
+
+## Project Structure
 
 ```text
 ai-firmware-studio
 ├── frontend
 ├── backend
 ├── bsp
-│   ├── stm32
-│   ├── esp32
-│   └── arduino
 ├── templates
-│   ├── gpio
-│   ├── uart
-│   └── adc
 ├── firmware_output
 ├── examples
 └── README.md
 ```
 
-## Tech Stack
-
-- Frontend: React, TypeScript, Tailwind CSS, Vite
-- Backend: FastAPI, Pydantic
-- AI layer: OpenAI API integration with JSON-schema-constrained extraction
-- Firmware generation: template-based C code generation
-
-## Supported Boards
-
-### STM32F103 Blue Pill
-- Clock config
-- GPIO mapping
-- UART driver
-- ADC driver
-- Interrupt handlers
-
-### ESP32 DevKit
-- Clock config
-- GPIO mapping
-- UART driver
-- ADC driver
-- Interrupt handlers
-
-### Arduino Uno
-- Clock config
-- GPIO mapping
-- UART driver
-- ADC driver
-- Interrupt handlers
-
-## Screenshots
-
-Screenshots can be added later in `docs/` using these placeholders:
-
-- `docs/screenshot-dashboard.png`
-- `docs/screenshot-generated-firmware.png`
-
-## Installation
+## Running Locally
 
 ### Backend
 
@@ -129,129 +212,46 @@ copy .env.example .env
 uvicorn app.main:app --reload
 ```
 
-Recommended Python version: `3.11` to `3.13`. On the current March 14, 2026 stack, Python `3.14` may require a local Rust toolchain to build `pydantic-core`, so the smoothest setup is Python `3.13`.
-
-Set `OPENAI_API_KEY` in `.env` to enable the OpenAI reasoning path. Without it, the backend still works using the deterministic parser.
-
 ### Frontend
 
 ```powershell
 cd ai-firmware-studio\frontend
-npm.cmd install
-npm.cmd copy .env.example .env
-npm.cmd run dev
+npm install
+copy .env.example .env
+npm run dev
 ```
-
-The frontend reads:
-
-- `VITE_API_BASE_URL` for the backend endpoint
-- `VITE_SITE_URL` for the canonical website link shown in the UI
 
 ## Deployment
 
-### GitHub
-
-Create a GitHub repository named `firmify-ai`, then push the local repo:
-
-```powershell
-cd c:\Users\ayush\OneDrive\Desktop\scrapper\ai-firmware-studio
-git add .
-git commit -m "Launch Firmify.ai"
-git branch -M main
-git remote add origin https://github.com/<your-username>/firmify-ai.git
-git push -u origin main
-```
-
-### Backend on Render
-
-The repository includes [render.yaml](/c:/Users/ayush/OneDrive/Desktop/scrapper/ai-firmware-studio/render.yaml) and [backend/runtime.txt](/c:/Users/ayush/OneDrive/Desktop/scrapper/ai-firmware-studio/backend/runtime.txt).
-
-On Render:
-
-1. Create a new Blueprint deployment from the GitHub repo.
-2. Confirm the generated web service `firmify-ai-api`.
-3. Add `OPENAI_API_KEY` in the Render environment settings.
-4. After deploy, copy the live API URL, for example `https://firmify-ai-api.onrender.com`.
-
-### Frontend on Vercel
-
-The repository includes [vercel.json](/c:/Users/ayush/OneDrive/Desktop/scrapper/ai-firmware-studio/vercel.json).
-
-On Vercel:
-
-1. Import the GitHub repo.
-2. Set the root to the repository root.
-3. Add environment variables:
-   `VITE_API_BASE_URL=https://firmify-ai-api.onrender.com/api`
-   `VITE_SITE_URL=https://firmify-ai.vercel.app`
-4. Deploy and connect the custom production domain or keep the Vercel URL.
-
-### CORS
-
-Render should expose:
-
+### Live frontend
 ```text
-CORS_ORIGINS=https://firmify-ai.vercel.app,http://localhost:5173,http://127.0.0.1:5173
+https://firmify-ai.vercel.app
 ```
 
-If your Vercel URL differs, update the Render environment variable to match it.
-
-## API
-
-### `POST /api/generate`
-
-Request body:
-
-```json
-{
-  "prompt": "Create firmware for STM32 that reads ADC from PA1 and sends value over UART every 500ms.",
-  "board": "stm32f103",
-  "use_ai": true
-}
+### Live backend
+```text
+https://firmify-ai-api.onrender.com
 ```
 
-### `GET /api/boards`
+## What This Project Is Not
 
-Returns supported board metadata and capabilities.
+Firmify.ai is a strong starting point, not a final replacement for production firmware engineering.
 
-### `GET /api/download?artifact_id=<id>`
+You should still:
+- verify generated pin mappings
+- validate board-specific hardware assumptions
+- test timing and interrupt behavior on real hardware
+- adapt the code for your SDK, HAL, or production build system
 
-Downloads the generated ZIP artifact.
+## Future Direction
 
-## Demo Commands
-
-```powershell
-curl http://127.0.0.1:8000/api/boards
-```
-
-```powershell
-curl -X POST http://127.0.0.1:8000/api/generate `
-  -H "Content-Type: application/json" `
-  -d "{\"prompt\":\"Create firmware for STM32 that reads ADC from PA1 and sends value over UART every 500ms.\",\"board\":\"stm32f103\",\"use_ai\":true}"
-```
-
-## Example Prompts
-
-- `Create firmware for STM32 that reads ADC from PA1 and sends value over UART every 500ms.`
-- `Build Arduino Uno firmware that samples A0 and prints readings every 1s.`
-- `Generate ESP32 firmware that toggles GPIO2 and streams status over UART.`
-- `Create STM32 firmware that blinks PC13 every 200ms and logs heartbeat text over UART.`
-
-## Example Output
-
-The repository includes a generated STM32 example:
-
-- [examples/stm32_adc_uart_500ms.prompt.txt](/c:/Users/ayush/OneDrive/Desktop/scrapper/ai-firmware-studio/examples/stm32_adc_uart_500ms.prompt.txt)
-- [examples/stm32_adc_uart_500ms.main.c](/c:/Users/ayush/OneDrive/Desktop/scrapper/ai-firmware-studio/examples/stm32_adc_uart_500ms.main.c)
-- `examples/stm32_adc_uart_500ms/` contains the full generated starter project.
-
-## Development Notes
-
-- The OpenAI integration uses the Python SDK and requests structured JSON output for intent extraction.
-- Generated firmware is designed as a board-aware starter project and can be extended into a vendor SDK or HAL-based workflow.
-- BSP source stubs are copied into each artifact to provide a starting point for customization.
-- `vercel.json` is included so the frontend can be deployed quickly after the repo is pushed.
-- `render.yaml` is included so the backend can be deployed quickly after the repo is pushed.
+Some natural next steps for Firmify.ai are:
+- support for more boards and vendors
+- richer HAL / SDK integration
+- smarter debugging suggestions
+- project export formats for real embedded toolchains
+- simulation and validation workflows
+- team collaboration around firmware prompts and generated artifacts
 
 ## License
 
