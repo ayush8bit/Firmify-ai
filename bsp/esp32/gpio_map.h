@@ -1,0 +1,6 @@
+#pragma once
+
+#define ESP32_ADC_DEFAULT_PIN "GPIO32"
+#define ESP32_UART_TX_PIN "GPIO1"
+#define ESP32_UART_RX_PIN "GPIO3"
+

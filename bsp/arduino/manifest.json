@@ -1,0 +1,12 @@
+{
+  "key": "arduino-uno",
+  "label": "Arduino Uno",
+  "family": "arduino",
+  "cpu": "ATmega328P",
+  "toolchain": "avr-gcc",
+  "default_uart": "USART0",
+  "analog_pins": ["A0", "A1", "A2", "A3", "A4", "A5"],
+  "digital_pins": ["D0", "D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8", "D9", "D10", "D11", "D12", "D13"],
+  "summary": "Classic AVR development board with serial and analog read support."
+}
+

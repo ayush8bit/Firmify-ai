@@ -1,0 +1,12 @@
+{
+  "key": "esp32dev",
+  "label": "ESP32 DevKit",
+  "family": "esp32",
+  "cpu": "Xtensa LX6",
+  "toolchain": "xtensa-esp32-elf-gcc",
+  "default_uart": "UART0",
+  "analog_pins": ["GPIO32", "GPIO33", "GPIO34", "GPIO35"],
+  "digital_pins": ["GPIO2", "GPIO4", "GPIO5", "GPIO18", "GPIO19", "GPIO21", "GPIO22", "GPIO23"],
+  "summary": "Wi-Fi capable ESP32 board with UART logging and ADC input support."
+}
+

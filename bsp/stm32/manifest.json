@@ -1,0 +1,12 @@
+{
+  "key": "stm32f103",
+  "label": "STM32F103 Blue Pill",
+  "family": "stm32",
+  "cpu": "ARM Cortex-M3",
+  "toolchain": "arm-none-eabi-gcc",
+  "default_uart": "USART1",
+  "analog_pins": ["PA0", "PA1", "PA2", "PA3"],
+  "digital_pins": ["PA1", "PA2", "PA9", "PA10", "PB0", "PB1", "PC13"],
+  "summary": "General-purpose STM32 board with ADC and UART support."
+}
+

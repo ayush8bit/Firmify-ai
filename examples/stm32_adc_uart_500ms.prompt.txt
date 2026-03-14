@@ -1,0 +1,2 @@
+Create firmware for STM32 that reads ADC from PA1 and sends value over UART every 500ms.
+
