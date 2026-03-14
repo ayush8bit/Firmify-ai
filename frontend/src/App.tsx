@@ -7,7 +7,6 @@ import { SimulatorPanel } from "./components/SimulatorPanel";
 import type { BoardInfo, GenerateResponse } from "./types";
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL ?? "http://127.0.0.1:8000/api";
-const SITE_URL = import.meta.env.VITE_SITE_URL ?? "https://firmify-ai.vercel.app";
 const DEFAULT_PROMPT = "Create firmware for STM32 that reads ADC from PA1 and sends value over UART every 500ms.";
 
 declare global {
@@ -141,12 +140,7 @@ function App() {
               </div>
             </div>
 
-            <div className="grid gap-3 sm:grid-cols-2 lg:w-[24rem] lg:grid-cols-1">
-              <div className="rounded-[1.75rem] border border-white/10 bg-black/20 p-5">
-                <p className="text-xs uppercase tracking-[0.35em] text-stone-400">Live Site Target</p>
-                <p className="mt-3 font-display text-xl text-white">Firmify.ai</p>
-                <p className="mt-2 text-sm leading-6 text-stone-300">{SITE_URL}</p>
-              </div>
+            <div className="lg:w-[24rem]">
               <div className="rounded-[1.75rem] border border-white/10 bg-black/20 p-5">
                 <p className="text-xs uppercase tracking-[0.35em] text-stone-400">Pipeline</p>
                 <div className="mt-3 space-y-2 text-sm text-stone-300">
