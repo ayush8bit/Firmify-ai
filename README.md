@@ -2,7 +2,7 @@
 
 Firmify.ai is a web app that helps people turn plain-English hardware ideas into starter firmware projects.
 
-Instead of opening vendor tools, digging through datasheets, remembering pin mappings, and writing boilerplate from scratch, you can describe what you want in one sentence and get back structured embedded C firmware you can inspect, download, and build on.
+Instead of opening vendor tools, digging through datasheets, remembering pin mappings, and writing boilerplate from scratch, you can just describe what you want in one sentence and get back structured embedded C firmware you can inspect, download, and build on.
 
 Example:
 
@@ -22,7 +22,7 @@ A lot of people hit the same wall:
 - They get stuck in board setup, initialization, clock config, and peripheral boilerplate
 - They lose time jumping between documentation, examples, forums, and IDEs
 
-Firmify.ai is meant to reduce that friction.
+Fret not, Firmify.ai is meant to reduce that friction.
 
 It does not try to replace embedded engineers.
 It helps them start faster.
@@ -43,9 +43,9 @@ Firmware work often starts with repetitive setup:
 - creating the same project structure again and again
 - translating a functional idea into low-level code
 
-That setup work is necessary, but it is rarely the interesting part.
+That setup work is necessary, but it is rarely the fun part.
 
-Firmify.ai helps by converting a human description into a board-aware firmware starter project. That means less time spent on boilerplate, and more time spent testing the actual idea.
+Firmify.ai helps by converting a natural language description into a board-aware firmware starter project. That means less time spent on boilerplate, and more time spent testing the actual idea.
 
 ## How It Helps People
 
@@ -253,6 +253,3 @@ Some natural next steps for Firmify.ai are:
 - simulation and validation workflows
 - team collaboration around firmware prompts and generated artifacts
 
-## License
-
-MIT
